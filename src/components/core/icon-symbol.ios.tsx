@@ -1,5 +1,5 @@
 import { SymbolView, SymbolViewProps, SymbolWeight } from "expo-symbols";
-import { OpaqueColorValue, StyleProp, ViewStyle } from "react-native";
+import { ColorValue, StyleProp, ViewStyle } from "react-native";
 import { IconSymbolName } from "./icon-symbol";
 
 export function IconSymbol({
@@ -11,7 +11,7 @@ export function IconSymbol({
 }: {
   name: IconSymbolName;
   size?: number;
-  color: string | OpaqueColorValue;
+  color?: string | ColorValue;
   style?: StyleProp<ViewStyle>;
   weight?: SymbolWeight;
 }) {
