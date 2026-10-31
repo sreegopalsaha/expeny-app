@@ -104,4 +104,16 @@ export const initializeDatabase = async () => {
   }
 };
 
+export const clearAllData = async (): Promise<void> => {
+  await expoDb.execAsync(`
+    DELETE FROM pocket_transactions;
+    DELETE FROM pockets;
+    DELETE FROM udhaar_transactions;
+    DELETE FROM udhaar_friends;
+    DELETE FROM transactions;
+    DELETE FROM payment_sources;
+    UPDATE rewards SET balance = 0, current_streak = 0, last_claim_date = NULL, last_check_in_date = NULL, last_claimed_milestone = 0;
+  `);
+};
+
 export { db, expoDb };

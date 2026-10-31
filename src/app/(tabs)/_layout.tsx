@@ -14,11 +14,17 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.tint,
+        tabBarInactiveTintColor: "#9CA3AF",
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "500",
+        },
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
           backgroundColor: "#121212",
-          borderTopWidth: 0,
+          borderTopColor: "#222222",
+          borderTopWidth: 1,
           elevation: 0,
           shadowOpacity: 0,
         },
@@ -30,7 +36,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <IconSymbol size={24} name="house.fill" color={color} />
           ),
         }}
       />
@@ -39,7 +45,7 @@ export default function TabLayout() {
         options={{
           title: "Pockets",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="wallet.pass.fill" color={color} />
+            <IconSymbol size={24} name="wallet.pass.fill" color={color} />
           ),
         }}
       />
@@ -48,7 +54,7 @@ export default function TabLayout() {
         options={{
           title: "Udhaar",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person.2.fill" color={color} />
+            <IconSymbol size={24} name="person.2.fill" color={color} />
           ),
         }}
       />
@@ -57,17 +63,23 @@ export default function TabLayout() {
         options={{
           title: "History",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="clock.fill" color={color} />
+            <IconSymbol size={24} name="clock.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={24} name="gearshape.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="streak"
         options={{
-          title: "Streak",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="flame.fill" color={color} />
-          ),
+          href: null,
         }}
       />
     </Tabs>

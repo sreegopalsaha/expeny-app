@@ -40,6 +40,60 @@ function ActionButton({
   );
 }
 
+function RightActionsView({
+  progress,
+  actionWidth,
+  onArchive,
+  archiveLabel,
+  onDelete,
+  deleteLabel,
+  swipeableMethods,
+}: {
+  progress: SharedValue<number>;
+  actionWidth: number;
+  onArchive?: () => void;
+  archiveLabel: string;
+  onDelete?: () => void;
+  deleteLabel: string;
+  swipeableMethods: { close: () => void };
+}) {
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: (1 - progress.value) * actionWidth }],
+      opacity: progress.value > 0.02 ? 1 : 0,
+    };
+  });
+
+  return (
+    <Animated.View style={[styles.actionsContainer, { width: actionWidth }, animatedStyle]}>
+      {onArchive && (
+        <ActionButton
+          icon="archive-outline"
+          label={archiveLabel}
+          backgroundColor="#4caf50"
+          onPress={() => {
+            swipeableMethods.close();
+            onArchive();
+          }}
+          progress={progress}
+        />
+      )}
+      {onDelete && (
+        <ActionButton
+          icon="trash-outline"
+          label={deleteLabel}
+          backgroundColor="#dd2c00"
+          onPress={() => {
+            swipeableMethods.close();
+            onDelete();
+          }}
+          progress={progress}
+        />
+      )}
+    </Animated.View>
+  );
+}
+
 export default function SwipeableItem({
   children,
   onDelete,
@@ -51,44 +105,35 @@ export default function SwipeableItem({
     return <View style={styles.container}>{children}</View>;
   }
 
+  const numActions = (onArchive ? 1 : 0) + (onDelete ? 1 : 0);
+  const actionWidth = numActions * 75;
+
   const renderRightActions = (
     progress: SharedValue<number>,
     _translation: SharedValue<number>,
     swipeableMethods: { close: () => void }
   ) => {
     return (
-      <View style={styles.actionsContainer}>
-        {onArchive && (
-          <ActionButton
-            icon="archive-outline"
-            label={archiveLabel}
-            backgroundColor="#4caf50"
-            onPress={() => {
-              swipeableMethods.close();
-              onArchive();
-            }}
-            progress={progress}
-          />
-        )}
-        {onDelete && (
-          <ActionButton
-            icon="trash-outline"
-            label={deleteLabel}
-            backgroundColor="#dd2c00"
-            onPress={() => {
-              swipeableMethods.close();
-              onDelete();
-            }}
-            progress={progress}
-          />
-        )}
-      </View>
+      <RightActionsView
+        progress={progress}
+        actionWidth={actionWidth}
+        onArchive={onArchive}
+        archiveLabel={archiveLabel}
+        onDelete={onDelete}
+        deleteLabel={deleteLabel}
+        swipeableMethods={swipeableMethods}
+      />
     );
   };
 
   return (
     <View style={styles.container}>
-      <ReanimatedSwipeable renderRightActions={renderRightActions} overshootRight={false}>
+      <ReanimatedSwipeable
+        renderRightActions={renderRightActions}
+        overshootRight={false}
+        containerStyle={styles.swipeableContainer}
+        childrenContainerStyle={styles.childrenContainer}
+      >
         {children}
       </ReanimatedSwipeable>
     </View>
@@ -98,12 +143,20 @@ export default function SwipeableItem({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 12,
-    borderRadius: 12,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  swipeableContainer: {
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  childrenContainer: {
+    borderRadius: 16,
     overflow: "hidden",
   },
   actionsContainer: {
-    width: 140,
     flexDirection: "row",
+    height: "100%",
   },
   rightAction: {
     alignItems: "center",

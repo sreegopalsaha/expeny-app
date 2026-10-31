@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   card: {
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
   },
   name: {

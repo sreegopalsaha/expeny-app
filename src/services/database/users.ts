@@ -18,3 +18,7 @@ export const createUser = async (name: string, email: string): Promise<User> => 
   await db.insert(users).values(newUser);
   return newUser;
 };
+
+export const deleteUser = async (): Promise<void> => {
+  await db.delete(users);
+};

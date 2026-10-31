@@ -31,7 +31,7 @@ export default PocketCard;
 const styles = StyleSheet.create({
   card: {
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 16,
   },
   row: {
     flexDirection: "row",

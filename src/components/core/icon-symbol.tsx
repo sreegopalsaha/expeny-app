@@ -11,6 +11,7 @@ const MAPPING: Record<string, ComponentProps<typeof MaterialIcons>["name"]> = {
   "person.2.fill": "people",
   "flame.fill": "local-fire-department",
   "clock.fill": "history",
+  "gearshape.fill": "settings",
 };
 
 export type IconSymbolName = keyof typeof MAPPING;
